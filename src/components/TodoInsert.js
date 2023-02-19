@@ -1,0 +1,37 @@
+import React, {useState} from "react";
+import { MdAddCircle } from "react-icons/md";
+import './TodoInsert.css'
+
+const TodoInsert = ({onInsertToggle, onInsertTodo}) => {
+    console.log("TodoInsert Component 실행")
+
+    const [value, setValue] = useState("");
+
+    const onChange = e => {
+        setValue(e.target.value);
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        onInsertTodo(value);
+        setValue("");
+        onInsertToggle();
+    }
+    return (
+    <div>
+        <div className="background" onClick={onInsertToggle}></div>
+        <form onSubmit={onSubmit}>
+            <input
+                placeholder="please type"
+                value={value}
+                onChange={onChange}
+            ></input>
+            <button type="submit">
+                <MdAddCircle/>
+            </button>
+        </form>
+    </div>
+    );
+};
+
+export default TodoInsert;
