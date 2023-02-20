@@ -1,30 +1,16 @@
-import React, {useState}from "react";
+import React, {useState, useEffect}from "react";
 import './App.css';
 import Template from './components/Template';
 import TodoList from './components/TodoList';
 import TodoInsert from './components/TodoInsert';
 import {MdAddCircle} from 'react-icons/md';
+import axios from 'axios';
 
 let nextId = 4;
 const App = () => {
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [insertToggle, setInsertToggle] = useState(false);
   const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "할일 1",
-      checked: true
-    },
-    {
-      id: 2,
-      text: "할일 2",
-      checked: false
-    },
-    {
-      id: 3,
-      text: "할일 3",
-      checked: true
-    }
   ]);
 
 const onInsertToggle = () => {
@@ -46,6 +32,7 @@ const onInsertTodo = (text) => {
     }
     setTodos(todos => todos.concat(todo));
     nextId++;
+    insertData(text);
   }
 };
 
@@ -60,6 +47,7 @@ const onChangeSelectedTodo = (todo) => {
 const onRemove = id => {
   onInsertToggle();
   setTodos(todos => todos.filter(todo => todo.id !== id));
+  removeData(id);
 };
 
   const onUpdate = (id, text) => {
@@ -67,7 +55,69 @@ const onRemove = id => {
     setTodos(todos => todos.map(todo => todo.id === id ? {
       ...todo, text
     } : todo))
+    updateData(id, text);
   }
+
+  // Axios 전체 조회
+    const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/plan");
+      console.log("응답값 데이터 길이 : " + response.data.length);
+      for (var i=0; i<response.data.length; i++) {
+        console.log("i : "+i);
+        const todo = {
+          id: response.data[i].id,
+          text : response.data[i].content,
+          checked: false
+        }
+        setTodos(todos => todos.concat(todo));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Axios 계획 추가
+  const insertData = async (text) => {
+    const requestData = {
+      content: text
+    }
+    try {
+      const response = await axios.post(`http://localhost:8080/plan`,requestData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Axios 계획 수정
+    const updateData = async (id, text) => {
+    const requestData = {
+      id: id,
+      content: text
+    }
+    try {
+      const response = await axios.put("http://localhost:8080/plan",requestData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Axios 계획 삭제
+  const removeData = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:8080/plan/${parseInt(id)}`);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect( () => {
+    fetchData();
+  },[])
+
 
   return (
     <Template todoLength={todos.length}>

@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# React.js TODO 트러불슛팅
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. API를 통해서 데이터를 받아온뒤 TODO 목록을 렌더링 하는 과정에서 무한루프 발생
 
-## Available Scripts
+* 원인
+데이터를 받아온 뒤 렌더링을 하는 함수가 App.js(현재 최상위 Component)에 등록되있다.
+해당 함수가 호출하면서 TODO목록의 상태를 담당하는 state가 변경이 되는데 (아래코드 변경)
+```
+const [todos, setTodos] = useState([
+  ]);
+```
+위의 todos의 state가 변경되면서 App.js을 연속으로 렌더링하고 있었다.
 
-In the project directory, you can run:
+```
+import React, {useState, useEffect}from "react";
+```
 
-### `npm start`
+useState함수는 react에서 제공하는 모듈?에서 사용한 것인데 여기에 상태변경시 
+추가적으로 렌더링이되도록 만들어진 것 같다
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* 해결책
+..
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. url의 pathvarible로 id(Api에서는 Long타입) 전달시 오류 발생
 
-### `npm test`
+* 해결책
+```
+const response = await axios.delete(`http://localhost:8080/plan/${parseInt(id)}`);
+```
+위와 같이 ${parseInt(변수명)} 을통해 정수형으로 변환
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
