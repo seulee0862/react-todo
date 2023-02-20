@@ -19,7 +19,7 @@ useState함수는 react에서 제공하는 모듈?에서 사용한 것인데 여
 추가적으로 렌더링이되도록 만들어진 것 같다<br>
 
 ##### * 해결책
-..(진행중)
+index.js에서 <React-strict> 태그삭제 
 
 ### 2. url의 pathvarible로 id(Api에서는 Long타입) 전달시 오류 발생
 

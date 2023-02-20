@@ -4,7 +4,8 @@ import Template from './components/Template';
 import TodoList from './components/TodoList';
 import TodoInsert from './components/TodoInsert';
 import {MdAddCircle} from 'react-icons/md';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
+import {fetchData} from './api/todo.js'
 
 let nextId = 4;
 const App = () => {
@@ -58,24 +59,23 @@ const onRemove = id => {
     updateData(id, text);
   }
 
-  // Axios 전체 조회
-    const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/plan");
-      console.log("응답값 데이터 길이 : " + response.data.length);
-      for (var i=0; i<response.data.length; i++) {
+   const todoData = () => {
+    fetchData().then(res=>{
+      console.log("응답값 데이터 길이 : " + res.length);
+      for (let i=0; i<res.length; i++) {
         console.log("i : "+i);
         const todo = {
-          id: response.data[i].id,
-          text : response.data[i].content,
+          id: res[i].id,
+          text : res[i].content,
           checked: false
         }
-        setTodos(todos => todos.concat(todo));
+        setTodos(todos => [...todos, todo]);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    });
+
+   };
+
+   
 
   // Axios 계획 추가
   const insertData = async (text) => {
@@ -115,7 +115,7 @@ const onRemove = id => {
   }
   
   useEffect( () => {
-    fetchData();
+    todoData();
   },[])
 
 
