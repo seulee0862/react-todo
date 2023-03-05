@@ -1,37 +1,48 @@
 .TodoItem {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 5px 1px rgba(10, 128, 255, 0.5);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
   
-    border-radius: 5px;
-    box-shadow: 1px 2px 5px 1px #f67280;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-  }
+  border: 1px solid rgba(10, 128, 255, 0.5);
+  gap: 20px;
+}
+
+.TodoItem-firstLine{
+  display: flex;
+}
+
+.btn {
+  display: block;
+}
+.name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #6c567b;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.content {
+  flex: 1; /* 추가 */
+  font-size: 1.1rem;
+  color: #6c567b;
+  cursor: pointer;
   
-  .TodoItem + .TodoItem {
-    margin-top: 15px;
-  }
-  
-  .content {
-    cursor: pointer;
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-  
-  .content svg {
-    font-size: 1.5rem;
-    color: #f67280;
-  }
-  .content .text {
-    margin-left: 0.5rem;
-    flex: 1;
-  }
-  
-  .content.checked .text {
-    color: #6c567b;
-    text-decoration: line-through;
-    cursor: pointer;
-    opacity: 0.6;
-  }
+  transition: color 0.3s ease-in-out;
+  margin-left: 20px;
+}
+
+.edit-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #0a80ff;
+  transition: color 0.3s ease-in-out;
+  padding: 0;
+}

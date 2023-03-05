@@ -12,40 +12,53 @@ const TodoInsert = ({
     }) => {
     console.log("TodoInsert Component 실행")
 
-    const [value, setValue] = useState("");
+    const [content, setContent] = useState("");
+    const [name, setName] = useState("");
 
-    const onChange = e => {
-        setValue(e.target.value);
+    const onChangeContent = e => {
+        setContent(e.target.value);
+    };
+
+    const onChangeName = e => {
+        setName(e.target.value);
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        onInsertTodo(value);
-        setValue("");
+        onInsertTodo(name, content);
+        setContent("");
+        setName("");
         onInsertToggle();
     }
 
     useEffect(() => {
         if (selectedTodo) {
-            setValue(selectedTodo.text);
+            setContent(selectedTodo.content);
+            setName(selectedTodo.name)
         }
     }, [selectedTodo]);
     return (
     <div>
         <div className="background" onClick={onInsertToggle}></div>
         <form onSubmit={selectedTodo ? () => {
-            onUpdate(selectedTodo.id, value)} : onSubmit
+            onUpdate(selectedTodo.id, name, content, selectedTodo.checked)} : onSubmit
+        
             }>
             <input
-                placeholder="please type"
-                value={value}
-                onChange={onChange}
+                placeholder="please name"
+                value={name}
+                onChange={onChangeName}
+            ></input>
+            <input
+                placeholder="please content"
+                value={content}
+                onChange={onChangeContent}
             ></input>
             {selectedTodo ? (
                 <div className="rewrite">
                     <TiPencil 
                         onClick={() => {
-                            onUpdate(selectedTodo.id, value);
+                            onUpdate(selectedTodo.id, name, content, selectedTodo.checked)
                         }}
                     />
                     <TiTrash onClick={() => onRemove(selectedTodo.id)}/>

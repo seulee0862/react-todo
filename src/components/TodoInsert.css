@@ -24,7 +24,7 @@ form {
     width: 300px;
     height: 150px;
     border-radius: 5px;
-    box-shadow: 1px 2px 5px 1px #f67280;
+    box-shadow: 1px 2px 5px 1px rgba(10, 128, 255, 0.5);
 
     background-color: white;
 }
@@ -33,7 +33,7 @@ form > input {
     background: none;
     outline: none;
     border: none;
-    border-bottom: 1px solid #f67280;
+    border-bottom: 1px solid rgba(10, 128, 255, 0.5);
 
     padding: 0.5rem;
     font-size: 1.125rem;
@@ -45,7 +45,7 @@ form > button {
     background-color: none;
     outline: none;
     border: none;
-    color: #f67280;
+    color: rgba(10, 128, 255, 0.5);
     padding-left: 1rem;
     padding-right: 1rem;
     font-size: 1.5rem;
@@ -57,7 +57,7 @@ form > button {
 
 .rewrite > svg {
     padding-top : 20px;
-    color : #f67280;
+    color : rgba(10, 128, 255, 0.5);
     padding-left: 1rem;
     padding-right: 1rem;
     font-size: 1.5rem;
